@@ -1,0 +1,2 @@
+#!/bin/bash
+exec zig run $(dirname $0)/${STEP:-stepA_mal}.zig "${@}"
