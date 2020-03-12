@@ -105,6 +105,8 @@ php/mal-web.php
 ps/mal.ps
 python/mal.pyz
 r/mal.r
+reasonml/.merlin
+reasonml/_build/
 ruby/mal.rb
 .cargo/
 rust/target/
