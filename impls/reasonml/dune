@@ -1,2 +1,3 @@
 (executables
-  (names step0_repl))
+  (names step0_repl)
+  (libraries linenoise))

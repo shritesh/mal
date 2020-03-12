@@ -4,14 +4,21 @@ let print = x => x;
 
 let rep = x => x |> read |> eval |> print;
 
-let rec main = () => {
-  print_string("user> ");
-  switch (read_line()) {
-  | input =>
-    input |> rep |> print_endline;
-    main();
-  | exception End_of_file => ()
-  };
-};
+let historyFile = Sys.getenv("HOME") ++ "/.mal-history";
 
-main();
+let main = {
+  LNoise.history_load(~filename=historyFile) |> ignore;
+
+  let rec loop = () =>
+    switch (LNoise.linenoise("user> ")) {
+    | None => ()
+    | Some(input) =>
+      LNoise.history_add(input) |> ignore;
+      input |> rep |> print_endline;
+      loop();
+    };
+
+  loop();
+
+  LNoise.history_save(~filename=historyFile) |> ignore;
+};
