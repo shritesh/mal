@@ -4,21 +4,19 @@ let print = x => x;
 
 let rep = x => x |> read |> eval |> print;
 
-let historyFile = Sys.getenv("HOME") ++ "/.mal-history";
-
 let main = {
-  LNoise.history_load(~filename=historyFile) |> ignore;
+  Readline.init();
 
   let rec loop = () =>
-    switch (LNoise.linenoise("user> ")) {
+    switch (Readline.prompt("user> ")) {
     | None => ()
     | Some(input) =>
-      LNoise.history_add(input) |> ignore;
+      Readline.add(input);
       input |> rep |> print_endline;
       loop();
     };
 
   loop();
 
-  LNoise.history_save(~filename=historyFile) |> ignore;
+  Readline.save();
 };
